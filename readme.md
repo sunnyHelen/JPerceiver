@@ -151,4 +151,4 @@ If you meet any problems, please describe them in issues or contact:
 
 ## License
 This project is released under the MIT License (refer to the LICENSE file for details).
-Thanks for the open-source related works. This project partially depends on the sources of [Monolayout](https://github.com/hbutsuak95/monolayout), [PYVA](https://github.com/JonDoe-297/cross-view) and [FeatDepth](https://github.com/sconlyshootery/FeatDepth)
+Thanks for the open-source related works. This project partially depends on the sources of [Monolayout](https://github.com/hbutsuak95/monolayout), [PYVA](https://github.com/JonDoe-297/cross-view), [Monodepth2](https://github.com/nianticlabs/monodepth2) and [FeatDepth](https://github.com/sconlyshootery/FeatDepth)
