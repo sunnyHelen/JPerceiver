@@ -77,14 +77,17 @@ datasets/
 ## Training
 
 1. Prepare the corresponding dataset
+
 2. Run training
 ```plain
 # Training
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python -m torch.distributed.launch --nproc_per_node=8 --master_port 25629  train.py --config config/cfg_kitti_baseline_odometry_boundary_ce_iou_1024_20.py --work_dir log/odometry/
 
 ```
-3.Choose different config file and log directory for different datasets and training settings. 
+3. Choose different config file and log directory for different datasets and training settings. 
+
 4. The evaluation of BEV layout is conducted during training, which can be found in respective "xxx.log.json" files.
+
 ## Evaluation
 
 1. Prepare the corresponding dataset
