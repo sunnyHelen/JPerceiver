@@ -104,15 +104,22 @@ python scripts/draw_odometry.py
 
 ## Pretrained Models
 
-The following table provides links to the [pre-trained models](https://drive.google.com/drive/folders/1PK9yiKdsXmoH53xP-As0h5n0LyBSgTGN?usp=sharing&fileGuid=3X8QJDGGJPXyQgW9) for each dataset mentioned in our paper. The table also shows the corresponding evaluation results for these models.
+The following table provides links to the [pre-trained models](https://drive.google.com/drive/u/0/folders/1QAUEluGvSimXsvtvpXE0FxMR7jCxm0BO) for each dataset mentioned in our paper. The table also shows the corresponding evaluation results for these models.
+
 
 | Dataset            | Segmentation Objects | mIOU(%) | mAP(%) | Pretrained Model                                                                                                       | 
 | :--------:           | :-----:     |:-------:|:------:| :----:                                                                                                                 |
-| KITTI 3D Object     | Vehicle    |  40.85  | 57.23  | [link](https://drive.google.com/drive/folders/1XipKf-fLdpikyuQrSjWVrI_TIiZFy7HO?usp=sharing&fileGuid=3X8QJDGGJPXyQgW9) |
-| KITTI Odometry     | Road     |  78.13  | 89.57  | [link](https://drive.google.com/drive/folders/1eQmDOvI6_iWKRaILAJ2XMA-GmlyjkgX1?usp=sharing&fileGuid=3X8QJDGGJPXyQgW9) |
-| KITTI Raw          | Road     |  66.39  | 86.17  | [link](https://drive.google.com/drive/folders/1VuwZtN9IPtKIAya9N_33WWVMfW8HOzu5?usp=sharing&fileGuid=3X8QJDGGJPXyQgW9) |
-| Argoverse Tracking | Vehicle    |  49.45  | 65.84  | [link](https://drive.google.com/drive/folders/1SFIwQ94IFc1Rg4SxUsGNabp4jDUPCSot?usp=sharing&fileGuid=3X8QJDGGJPXyQgW9) |
-| Argoverse Tracking | Road    |  77.50  | 90.21  | [link](https://drive.google.com/drive/folders/1w5aTi0XQYbg3myWlmy89knA0gtp6fced?usp=sharing&fileGuid=3X8QJDGGJPXyQgW9) |
+| KITTI 3D Object     | Vehicle    |  40.85  | 57.23  | [link](https://drive.google.com/drive/u/0/folders/1QAUEluGvSimXsvtvpXE0FxMR7jCxm0BO) |
+| KITTI Odometry     | Road     |  78.13  | 89.57  | [link](https://drive.google.com/drive/u/0/folders/1QAUEluGvSimXsvtvpXE0FxMR7jCxm0BO) |
+| KITTI Raw          | Road     |  66.39  | 86.17  | [link](https://drive.google.com/drive/u/0/folders/1QAUEluGvSimXsvtvpXE0FxMR7jCxm0BO) |
+| Argoverse Tracking | Vehicle    |  49.45  | 65.84  | [link](https://drive.google.com/drive/u/0/folders/1QAUEluGvSimXsvtvpXE0FxMR7jCxm0BO) |
+| Argoverse Tracking | Road    |  77.50  | 90.21  | [link](https://drive.google.com/drive/u/0/folders/1QAUEluGvSimXsvtvpXE0FxMR7jCxm0BO) |
+
+Results of depth estimation on eigen split
+
+| abs_rel             | sq_rel | rmse | rmse_log |  a1  |   a2  | a3   |   Scaling ratios    | Pretrained Model                                                                                                       | 
+| :--------:           | :-----:     |:-------:|:--------:|-----|-----|------|-----| :----:                                                                                                                 |
+| 0.116      | 0.984   | 5.022|  0.193   | 0.875 | 0.959 | 0.982 | 1.074 ± 0.077  | [link](https://drive.google.com/drive/u/0/folders/1QAUEluGvSimXsvtvpXE0FxMR7jCxm0BO) |
 
 
 ## Results
