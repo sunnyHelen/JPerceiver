@@ -141,8 +141,6 @@ python eval_kitti_video.py
 # Argoverse
 eval_argo_both_video.py
 
-#Nuscenes
-eval_nuscenes_both.py
 ```
 
 ## Contact
