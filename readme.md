@@ -2,6 +2,8 @@
 #### Haimei Zhao, Jing Zhang, Sen Zhang and Dacheng Tao
 
 #### Accepted to ECCV 2022
+> [ECCV 2022 (arXiv pdf)](https://arxiv.org/abs/2207.07895)
+
 
 ![the teaser figure](./images/teaser.png "teaser")
 
