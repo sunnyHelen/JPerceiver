@@ -110,60 +110,53 @@ class Baseline(nn.Module):
         return reprojection_loss
 
     def compute_losses(self, inputs, outputs):
-        # print("topview*****************",outputs["topview"].shape)
-        # print("target*****************", inputs["both",0,0].shape)
-        #print(self.opt["type"])
         loss_dict = {}
-  #      start2 = time.time()
-  #       if self.opt["type"] == "both":
-  #           weight = torch.Tensor([1., self.weight["dynamic"], self.weight["static"]])
         if self.opt["type"] == "static_raw" or self.opt["type"] == "static" or self.opt["type"] == "Argo_static" or self.opt["type"] == "Argo_both":
 
             weightS = torch.Tensor([1., self.weight["static"]])
         if self.opt["type"] == "dynamic" or self.opt["type"] == "Argo_dynamic" or self.opt["type"] == "Argo_both":
             weightD = torch.Tensor([1., self.weight["dynamic"]])
-        if self.opt["type"] == "static" or self.opt["type"] == "static_raw" or self.opt["type"] == "Argo_static" or self.opt["type"] == "Argo_both":
+        if self.opt["type"] == "static" or self.opt["type"] == "static_raw" or self.opt["type"] == "Argo_static":
             scale_label = self.get_scale_label_static(inputs, self.opt)
         elif self.opt["type"] == "dynamic" or self.opt["type"] == "Argo_dynamic":
             scale_label = self.get_scale_label_dynamic(inputs, self.opt)
-        #endl1 = time.time()
-  #      print("compute scale label time:", endl1 - start2)
-        loss_dict["topview_loss"] = 0
-        loss_dict["transform_topview_loss"] = 0
-        loss_dict["transform_loss"] = 0
-        loss_dict["topview_lossB"] = 0
-        loss_dict["transform_topview_lossB"] = 0
-        loss_dict["transform_lossB"] = 0
-        # print("outputs[topview]:", outputs["topview"].shape)
-        # print("inputs[both]:", inputs["both",0,0].shape)
-        loss_dict["topview_loss"] = self.compute_topview_loss(
-            outputs["topview"],
-            inputs["bothS",0,0],
-            weightS, self.opt)
-        loss_dict["transform_topview_loss"] = self.compute_topview_loss(
-            outputs["transform_topview"],
-            inputs["bothS",0,0],
-            weightS, self.opt)
-        loss_dict["transform_loss"] = self.compute_transform_losses(
-            outputs["features"],
-            outputs["retransform_features"])
-        loss_dict["layout_loss"] = loss_dict["topview_loss"] + 0.001 * loss_dict["transform_loss"] \
-                         + 1 * loss_dict["transform_topview_loss"]
-        loss_dict["topview_lossB"] = self.compute_topview_lossB(
-            outputs["topviewB"],
-            inputs["bothD", 0, 0],
-            weightD, self.opt)
-        loss_dict["transform_topview_lossB"] = self.compute_topview_lossB(
-            outputs["transform_topviewB"],
-            inputs["bothD", 0, 0],
-            weightD, self.opt)
-        loss_dict["transform_lossB"] = self.compute_transform_losses(
-            outputs["featuresB"],
-            outputs["retransform_featuresB"])
-        loss_dict["layout_lossB"] = loss_dict["topview_lossB"] + 0.001 * loss_dict["transform_lossB"] \
-                                   + 1 * loss_dict["transform_topview_lossB"]
-       # endl2 = time.time()
-  #      print("compute topview loss time:", endl2 - endl1)
+        elif self.opt["type"] == "Argo_both":
+            scale_label = self.get_scale_label_both(inputs, self.opt)
+        if self.opt["type"] == "static_raw" or self.opt["type"] == "static" \
+                or self.opt["type"] == "Argo_static" or self.opt["type"] == "Argo_both":
+            loss_dict["topview_loss"] = 0
+            loss_dict["transform_topview_loss"] = 0
+            loss_dict["transform_loss"] = 0
+            loss_dict["topview_loss"] = self.compute_topview_loss(
+                outputs["topview"],
+                inputs["bothS",0,0],
+                weightS, self.opt)
+            loss_dict["transform_topview_loss"] = self.compute_topview_loss(
+                outputs["transform_topview"],
+                inputs["bothS",0,0],
+                weightS, self.opt)
+            loss_dict["transform_loss"] = self.compute_transform_losses(
+                outputs["features"],
+                outputs["retransform_features"])
+            loss_dict["layout_loss"] = loss_dict["topview_loss"] + 0.001 * loss_dict["transform_loss"] \
+                             + 1 * loss_dict["transform_topview_loss"]
+        if self.opt["type"] == "dynamic" or self.opt["type"] == "Argo_dynamic" or self.opt["type"] == "Argo_both":
+            loss_dict["topview_lossB"] = 0
+            loss_dict["transform_topview_lossB"] = 0
+            loss_dict["transform_lossB"] = 0
+            loss_dict["topview_lossB"] = self.compute_topview_lossB(
+                outputs["topviewB"],
+                inputs["bothD", 0, 0],
+                weightD, self.opt)
+            loss_dict["transform_topview_lossB"] = self.compute_topview_lossB(
+                outputs["transform_topviewB"],
+                inputs["bothD", 0, 0],
+                weightD, self.opt)
+            loss_dict["transform_lossB"] = self.compute_transform_losses(
+                outputs["featuresB"],
+                outputs["retransform_featuresB"])
+            loss_dict["layout_lossB"] = loss_dict["topview_lossB"] + 0.001 * loss_dict["transform_lossB"] \
+                                       + 1 * loss_dict["transform_topview_lossB"]
         for scale in self.opt.scales:
             """
             initialization
@@ -201,13 +194,9 @@ class Baseline(nn.Module):
 
             min_reconstruct_loss, outputs[("min_index", scale)] = torch.min(reprojection_loss, dim=1)
             loss_dict[('min_reconstruct_loss', scale)] = min_reconstruct_loss.mean()/len(self.opt.scales)
-  #          endl3 = time.time()
-  #          print("compute photometric loss time: "+str(scale), endl3 - start3)
             scale_loss = self.get_scale_loss(inputs, outputs, scale, scale_label)
             loss_dict[('scale_loss', scale)] = self.opt.scale_weight * scale_loss / (2 ** scale) / len(
                 self.opt.scales)
-  #          endl4 = time.time()
-  #          print("compute scale loss time: "+str(scale), endl4 - endl3)
             """
             disp mean normalization
             """
@@ -220,8 +209,6 @@ class Baseline(nn.Module):
             """
             smooth_loss = self.get_smooth_loss(disp, target)
             loss_dict[('smooth_loss', scale)] = self.opt.smoothness_weight * smooth_loss / (2 ** scale)/len(self.opt.scales)
-   #         endl5 = time.time()
-   #         print("compute smooth loss time: " + str(scale), endl5 - endl4)
 
         return loss_dict
     def get_scale_loss(self, inputs, outputs, scale, scale_label):
